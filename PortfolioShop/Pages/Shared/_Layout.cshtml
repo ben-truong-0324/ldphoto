@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html>
 <html lang="en-US">
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <link href="~/css/agency.css" rel="stylesheet" />
 <link href="~/css/bootstrap.css" rel="stylesheet" />
 <link href="~/css/site.css" rel="stylesheet" />
@@ -13,11 +13,12 @@
 
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
         <div class="container">
-            <!-- <a class="navbar-brand d-inline-block text-truncate" asp-page="/Index" style="max-width: 65vw; font-size: 1.25rem;">
+
+        
+            <!-- <a class="navbar-brand d-inline-block text-truncate me-0" asp-page="/Index" style="max-width: calc(100vw - 140px); font-size: 1.15rem;">
                 LDPhotography
             </a> -->
-        
-            <a class="navbar-brand d-inline-block text-truncate me-0" asp-page="/Index" style="max-width: calc(100vw - 140px); font-size: 1.15rem;">
+            <a class="navbar-brand text-truncate" style="font-size: 1.15rem; max-width: 70%;" href="/">
                 LDPhotography
             </a>
             
@@ -49,7 +50,7 @@
         </div>
     </nav>
 
-    <main role="main">
+    <main role="main" style="padding-bottom:1em;">
         @RenderBody()
     </main>
 
@@ -58,7 +59,7 @@
             <div class="row">
                 <div class="col-lg-4 mb-5 mb-lg-0">
                     <h5>My Philosophy</h5>
-                    <p class="mission-statement"> I strive to cultivate an aesthetic appreciation for the
+                    <p class="mission-statement text-subheading"> I strive to cultivate an aesthetic appreciation for the
                         natural world, offering a unique collection of fine art prints and professional photographic
                         services inspired by the legacy of classical landscape masters. </p>
                     <div class="contact-info"> Monday to Sunday 10a – 5p<br> Fairfield, California<br> <a

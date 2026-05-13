@@ -4052,7 +4052,7 @@ textarea.form-control-lg {
 .navbar-brand {
   padding-top: 0.3125rem;
   padding-bottom: 0.3125rem;
-  margin-right: 1rem;
+  margin-right: 0rem;
   font-size: 1.25rem;
   text-decoration: none;
   white-space: nowrap;
@@ -6148,7 +6148,7 @@ textarea.form-control-lg {
 .carousel-indicators [data-bs-target] {
   box-sizing: content-box;
   flex: 0 1 auto;
-  width: 30px;
+  width: 2rem;
   height: 3px;
   padding: 0;
   margin-right: 3px;
@@ -11339,8 +11339,8 @@ p {
 }
 
 #mainNav {
-  padding-top: 1rem;
-  padding-bottom: 1rem;
+  padding-top: 0rem;
+  padding-bottom: 0rem;
   background-color: #212529;
 }
 #mainNav .navbar-toggler {
@@ -11564,7 +11564,7 @@ header.masthead .masthead-heading {
   position: relative;
   float: right;
   width: 100%;
-  padding: 0 20px 0 100px;
+  padding: 0 1.4rem 0 100px;
   text-align: left;
 }
 .timeline > li .timeline-panel:before {
@@ -11599,7 +11599,7 @@ header.masthead .masthead-heading {
 }
 .timeline > li.timeline-inverted > .timeline-panel {
   float: right;
-  padding: 0 20px 0 100px;
+  padding: 0 1.4rem 0 100px;
   text-align: left;
 }
 .timeline > li.timeline-inverted > .timeline-panel:before {
@@ -11640,7 +11640,7 @@ header.masthead .masthead-heading {
   .timeline > li .timeline-panel {
     float: left;
     width: 41%;
-    padding: 0 20px 20px 30px;
+    padding: 0 1.4rem 1.4rem 2rem;
     text-align: right;
   }
   .timeline > li .timeline-image {
@@ -11652,11 +11652,11 @@ header.masthead .masthead-heading {
   .timeline > li .timeline-image h4, .timeline > li .timeline-image .h4 {
     font-size: 13px;
     line-height: 18px;
-    margin-top: 16px;
+    margin-top: 1rem;
   }
   .timeline > li.timeline-inverted > .timeline-panel {
     float: right;
-    padding: 0 30px 20px 20px;
+    padding: 0 2rem 1.4rem 1.4rem;
     text-align: left;
   }
 }
@@ -11665,7 +11665,7 @@ header.masthead .masthead-heading {
     min-height: 150px;
   }
   .timeline > li .timeline-panel {
-    padding: 0 20px 20px;
+    padding: 0 1.4rem 1.4rem;
   }
   .timeline > li .timeline-image {
     width: 150px;
@@ -11675,10 +11675,10 @@ header.masthead .masthead-heading {
   .timeline > li .timeline-image h4, .timeline > li .timeline-image .h4 {
     font-size: 18px;
     line-height: 26px;
-    margin-top: 30px;
+    margin-top: 2rem;
   }
   .timeline > li.timeline-inverted > .timeline-panel {
-    padding: 0 20px 20px;
+    padding: 0 1.4rem 1.4rem;
   }
 }
 @media (min-width: 1200px) {
@@ -11686,7 +11686,7 @@ header.masthead .masthead-heading {
     min-height: 170px;
   }
   .timeline > li .timeline-panel {
-    padding: 0 20px 20px 100px;
+    padding: 0 1.4rem 1.4rem 100px;
   }
   .timeline > li .timeline-image {
     width: 170px;
@@ -11697,7 +11697,7 @@ header.masthead .masthead-heading {
     margin-top: 40px;
   }
   .timeline > li.timeline-inverted > .timeline-panel {
-    padding: 0 100px 20px 20px;
+    padding: 0 100px 1.4rem 1.4rem;
   }
 }
 .team-member {

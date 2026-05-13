@@ -44,7 +44,7 @@ html {
 
 @media (min-width: 768px) {
   html {
-    font-size: 16px;
+    font-size: 1rem;
   }
 }
 
@@ -81,13 +81,13 @@ body {
 
 /* Default for mobile (if the stacked menu is taller) */
 body {
-    padding-top: 100px;
+    padding-top: 6.5rem;
 }
 
 /* For larger desktop screens */
 @media (min-width: 992px) {
     body {
-        padding-top: 85px; 
+        padding-top: 5rem; 
     }
 }
 
@@ -144,7 +144,7 @@ header.masthead {
 /* Portfolio Aesthetic */
 .portfolio-item { 
     border: 1px solid var(--aa-border); 
-    padding: 10px; 
+    padding: .7rem; 
     background: white; 
 }
 
@@ -261,7 +261,7 @@ header.masthead {
     background: transparent !important;
     border: 1px solid #444 !important;
     color: #fff !important;
-    margin-right: 10px;
+    margin-right: .7rem;
 }
 
 .aa-footer .social-icons .btn-social:hover {
@@ -272,8 +272,8 @@ header.masthead {
 .season-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 30px;
-    padding-bottom: 5rem;
+    gap: 2rem;
+    padding-bottom: 1rem;
 }
 
 .season-item {
@@ -300,8 +300,8 @@ header.masthead {
 
 .season-label {
     position: absolute;
-    bottom: 20px;
-    left: 20px;
+    bottom: 1.4rem;
+    left: 1.4rem;
     color: #fff;
     text-transform: uppercase;
     letter-spacing: 4px;
@@ -312,8 +312,8 @@ header.masthead {
 /* --- Chronological Journey --- */
 .journey-timeline {
     border-left: 1px solid #000;
-    margin-left: 20px;
-    padding-left: 40px;
+    margin-left: 1.4rem;
+    padding-left: 2.8rem;
     position: relative;
 }
 
@@ -327,8 +327,8 @@ header.masthead {
     position: absolute;
     left: -46px;
     top: 0;
-    width: 12px;
-    height: 12px;
+    width: .8rem;
+    height: .8rem;
     background: #000;
 }
 
@@ -364,7 +364,7 @@ header.masthead {
         width: 100% !important;
         max-width: 450px; /* Prevents it from getting too huge on tablets */
         height: auto;
-        border-radius: 15px;
+        border-radius: 1rem;
         margin-left: 0 !important; /* Explicitly kills that left gap */
     }
     
@@ -386,7 +386,11 @@ header.masthead {
     /* 1. Reduce the massive letter spacing on titles so they don't break onto 4 lines */
     h1, h2 {
         letter-spacing: 2px !important;
-        font-size: 2rem !important;
+        font-size: 1rem !important;
+    }
+
+    .text-subheading {
+        font-size: .6rem !important;
     }
 
     /* 2. Make gallery and shop thumbnails slightly shorter on phones */
@@ -404,7 +408,7 @@ header.masthead {
 
     /* 4. Reduce massive padding blocks so content isn't squished */
     .page-section {
-        padding-top: 3rem !important;
+        padding-top: 0rem !important;
         padding-bottom: 3rem !important;
     }
 }

@@ -5,11 +5,11 @@
 
 <input type="hidden" id="pricingData" value='@Html.Raw(JsonSerializer.Serialize(Model.Product.Pricing))' />
 
-<div class="container p-5">
+<div class="container">
     <div class="row g-5">
         
-        <div class="col-lg-6">
-            <div class="room-context rounded shadow-sm">
+        <div class="col-12 col-lg-6 mb-4 mb-lg-0">
+            <div class="room-context rounded shadow-sm" style="min-height: 300px; max-height: 60vh;">
                 <div id="scaleWrapper" style="transition: transform 0.5s cubic-bezier(0.25, 0.8, 0.25, 1); transform: scale(0.4);">
                     <div id="dynamicPreview" class="preview-standard">
                         <img src="@Model.Product.ImageUrl" alt="@Model.Product.Name" class="img-fluid" id="sourceImage">
@@ -21,9 +21,9 @@
             </p>
         </div>
 
-        <div class="col-lg-6">
+        <div class="col-12 col-lg-6">
             <h2 class="serif-font fw-bold mb-2">@Model.Product.Name</h2>
-            <p class="text-muted mb-4">@Model.Product.Description</p>
+            <p class="text-muted mb-4 text-subheading">@Model.Product.Description</p>
             
             <h3 class="fw-bold mb-4" id="priceDisplay">@Model.Product.BasePrice.ToString("C")</h3>
 
@@ -153,7 +153,8 @@
     <style>
         /* --- VISUALIZER ROOM CONTEXT --- */
         .room-context {
-            height: 600px;
+            height: auto; /* changed from 600px */
+            aspect-ratio: 1 / 1;
             background-color: #e9ecef;
             background-image: linear-gradient(to bottom, #f8f9fa 0%, #e2e6ea 80%, #ced4da 100%);
             position: relative;
@@ -162,6 +163,11 @@
             align-items: center;
             justify-content: center;
             border: 1px solid #ddd;
+        }
+        @@media (min-width: 992px) {
+            .room-context {
+                height: 600px;
+            }
         }
         .room-context::after {
             content: '';
@@ -285,6 +291,22 @@
             background-size: 35px 35px;
             background-blend-mode: overlay;
             box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+        @@media (max-width: 576px) {
+            .format-card {
+                padding: 10px 5px; /* less padding on phones */
+            }
+            .format-card i {
+                font-size: 1.5rem; /* smaller icons */
+                margin-bottom: 8px;
+            }
+            .format-card span {
+                font-size: 0.85rem; /* smaller text */
+            }
+            .custom-tabs .nav-link {
+                padding: 8px 10px; /* smaller tab hitboxes */
+                font-size: 0.8rem;
+            }
         }
     </style>
 
@@ -415,5 +437,6 @@
 
             document.getElementById('priceDisplay').innerText = '$' + currentPrice.toFixed(2);
         }
+        
     </script>
 }
