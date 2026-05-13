@@ -1,0 +1,52 @@
+@page
+@model CheckoutIndexModel
+@{
+    ViewData["Title"] = "Checkout";
+}
+
+<h2>Checkout</h2>
+
+<div class="row">
+    <div class="col-md-6">
+        <h4>Order Summary</h4>
+        <p>Total: <strong>$@Model.Total.ToString("F2")</strong></p>
+        
+        <div id="paypal-button-container"></div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://www.paypal.com/sdk/js?client-id=@Model.PayPalClientId&currency=USD"></script>
+    <script>
+        paypal.Buttons({
+            createOrder: function() {
+                return fetch('/Checkout/Index?handler=CreateOrder', {
+                    method: 'post',
+                    headers: {
+                        'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val()
+                    }
+                }).then(function(res) {
+                    return res.json();
+                }).then(function(data) {
+                    return data.id;
+                });
+            },
+            onApprove: function(data) {
+                return fetch('/Checkout/Index?handler=CaptureOrder&orderId=' + data.orderID, {
+                    method: 'post',
+                    headers: {
+                        'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val()
+                    }
+                }).then(function(res) {
+                    return res.json();
+                }).then(function(data) {
+                    if (data.success) {
+                        window.location.href = '/Checkout/Confirmation?orderNumber=' + data.orderNumber;
+                    } else {
+                        alert('Payment failed. Please try again.');
+                    }
+                });
+            }
+        }).render('#paypal-button-container');
+    </script>
+}

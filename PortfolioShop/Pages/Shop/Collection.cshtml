@@ -1,0 +1,62 @@
+@page "{slug}"
+@model LDPhotography.Pages.Shop.CollectionModel
+@{
+    ViewData["Title"] = Model.CurrentCollection.Title;
+}
+
+<div class="container  pb-5">
+    
+    <div class="row justify-content-center mb-5 text-center">
+        <div class="col-lg-8">
+            <h1 class="text-uppercase mb-3" style="letter-spacing: 4px;">@Model.CurrentCollection.Title</h1>
+            <p class="serif-font text-muted lead mb-4">@Model.CurrentCollection.Description</p>
+            <p class="small text-uppercase fw-bold">Prints starting at $@Model.CurrentCollection.StartingPrice</p>
+            <hr class="w-25 mx-auto text-dark" />
+        </div>
+    </div>
+
+    <div class="row g-4">
+        @foreach (var print in Model.CurrentCollection.AvailablePrints)
+        {
+            <div class="col-md-6 col-lg-4">
+                <div class="print-item position-relative overflow-hidden group">
+                    <img src="@print.Url" alt="@print.Caption" class="img-fluid w-100 print-img" />
+                    
+                    <div class="print-overlay d-flex flex-column justify-content-center align-items-center">
+                        <h4 class="text-white serif-font mb-3">@print.Caption</h4>
+                        <button class="btn btn-light rounded-0 px-4 py-2" data-bs-toggle="modal" data-bs-target="#inquireModal">
+                            Select Options
+                        </button>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+@section Scripts {
+    <style>
+        .print-item {
+            background: #f8f9fa;
+            border: 1px solid #e0e0e0;
+        }
+        .print-img {
+            transition: transform 0.5s ease;
+            aspect-ratio: 1/1; 
+            object-fit: cover;
+        }
+        .print-overlay {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.6);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .print-item:hover .print-overlay {
+            opacity: 1;
+        }
+        .print-item:hover .print-img {
+            transform: scale(1.05);
+        }
+    </style>
+}

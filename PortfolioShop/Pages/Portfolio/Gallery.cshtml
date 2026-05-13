@@ -1,0 +1,45 @@
+@page "{collection}/{subCategory?}"
+@model LDPhotography.Pages.Portfolio.GalleryModel
+@{
+    ViewData["Title"] = Model.Title;
+}
+
+<div class="portfolio-detail-container">
+    <section class="collection-gallery pb-5">
+        <div class="container">
+            <div class="row g-5">
+                @foreach (var img in Model.GalleryImages)
+                {
+                    <div class="col-sm-6 col-md-4 col-lg-3 text-center">
+                        <a href="@img.ProductUrl">
+                        <img src="@img.Url" class="img-fluid gallery-thumbnail mb-3" alt="@img.AltText" />
+                        </a>
+                        
+                        <h6 class="serif-font mb-2 fs-5">@img.Caption</h6>
+                        
+                        @if (!string.IsNullOrEmpty(img.ProductUrl))
+                        {
+                            <a href="@img.ProductUrl" class="text-uppercase small text-dark fw-bold text-decoration-none" style="letter-spacing: 1px; border-bottom: 1px solid #000; padding-bottom: 2px;">
+                                Buy Now
+                            </a>
+                        }
+                    </div>
+                }
+            </div>
+        </div>
+    </section>
+</div>
+
+@section Scripts {
+    <style>
+        .gallery-thumbnail {
+            object-fit: cover;
+            height: 300px;
+            width: 100%;
+            transition: opacity 0.3s ease;
+        }
+        .gallery-thumbnail:hover {
+            opacity: 0.9;
+        }
+    </style>
+}

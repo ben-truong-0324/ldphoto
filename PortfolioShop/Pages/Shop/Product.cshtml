@@ -1,0 +1,419 @@
+@page "{id}"
+@model PortfolioShop.Pages.Shop.ProductModel
+@using global::Portfolio.Core.Models
+@using System.Text.Json
+
+<input type="hidden" id="pricingData" value='@Html.Raw(JsonSerializer.Serialize(Model.Product.Pricing))' />
+
+<div class="container p-5">
+    <div class="row g-5">
+        
+        <div class="col-lg-6">
+            <div class="room-context rounded shadow-sm">
+                <div id="scaleWrapper" style="transition: transform 0.5s cubic-bezier(0.25, 0.8, 0.25, 1); transform: scale(0.4);">
+                    <div id="dynamicPreview" class="preview-standard">
+                        <img src="@Model.Product.ImageUrl" alt="@Model.Product.Name" class="img-fluid" id="sourceImage">
+                    </div>
+                </div>
+            </div>
+            <p class="text-center text-muted small mt-3">
+                <i class="fas fa-search-plus me-1"></i> Preview scales dynamically to demonstrate relative sizing.
+            </p>
+        </div>
+
+        <div class="col-lg-6">
+            <h2 class="serif-font fw-bold mb-2">@Model.Product.Name</h2>
+            <p class="text-muted mb-4">@Model.Product.Description</p>
+            
+            <h3 class="fw-bold mb-4" id="priceDisplay">@Model.Product.BasePrice.ToString("C")</h3>
+
+            <form method="post" asp-page-handler="AddToCart" id="addToCartForm">
+                <input type="hidden" name="productId" value="@Model.Product.Id" />
+                <input type="hidden" id="basePrice" value="@Model.Product.BasePrice" />
+                <input type="hidden" asp-for="SelectedFormat" id="hiddenFormat" value="StandardPrint" />
+                
+                <ul class="nav nav-tabs mb-4 custom-tabs" id="productTabs" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active text-uppercase small letter-spacing-1 fw-bold" id="prints-tab" data-bs-toggle="tab" data-bs-target="#prints" type="button" role="tab">Prints</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link text-uppercase small letter-spacing-1 fw-bold" id="wallart-tab" data-bs-toggle="tab" data-bs-target="#wallart" type="button" role="tab">Wall Art</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link text-uppercase small letter-spacing-1 fw-bold" id="gifts-tab" data-bs-toggle="tab" data-bs-target="#gifts" type="button" role="tab">Gifts</button>
+                    </li>
+                </ul>
+
+                <div class="tab-content mb-4" id="productTabContent">
+                    
+                    <div class="tab-pane fade show active" id="prints" role="tabpanel">
+                        <div class="row g-3">
+                            <div class="col-12">
+                                <div class="format-card selected" onclick="selectFormat('StandardPrint', this, 'preview-standard')">
+                                    <i class="fas fa-images"></i>
+                                    <span class="fw-bold d-block">Standard Print</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-4" id="sizeContainer">
+                            <label asp-for="SelectedSize" class="form-label fw-bold small text-uppercase">Dimensions</label>
+                            <select asp-for="SelectedSize" class="form-select border-dark" id="sizeSelect" onchange="updatePrice()">
+                                <option value="4x6">4 x 6 Print</option>
+                                <option value="5x7">5 x 7 Print</option>
+                                <option value="8x10">8 x 10 Print</option>
+                                <option value="11x14">11 x 14 Print</option>
+                                <option value="12x12">12 x 12 Square Print</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade" id="wallart" role="tabpanel">
+                        <div class="row g-3">
+                            <div class="col-6">
+                                <div class="format-card" onclick="selectFormat('HangingCanvas', this, 'preview-canvas')">
+                                    <i class="fas fa-layer-group"></i>
+                                    <span class="fw-bold d-block">Hanging Canvas</span>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="format-card" onclick="selectFormat('WallArt', this, 'preview-framed')">
+                                    <i class="fas fa-vector-square"></i>
+                                    <span class="fw-bold d-block">Wall Art</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade" id="gifts" role="tabpanel">
+                        <div class="row g-3">
+                            <div class="col-6">
+                                <div class="format-card" onclick="selectFormat('Postcard', this, 'preview-standard')">
+                                    <i class="fas fa-envelope-open-text"></i>
+                                    <span class="fw-bold d-block">Postcards</span>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="format-card" onclick="selectFormat('Magnet', this, 'preview-standard')">
+                                    <i class="fas fa-magnet"></i>
+                                    <span class="fw-bold d-block">Magnet</span>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="format-card" onclick="selectFormat('Mug', this, 'preview-mug')">
+                                    <i class="fas fa-mug-hot"></i>
+                                    <span class="fw-bold d-block">Ceramic Mug</span>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="format-card" onclick="selectFormat('Puzzle', this, 'preview-puzzle')">
+                                    <i class="fas fa-puzzle-piece"></i>
+                                    <span class="fw-bold d-block">Jigsaw Puzzle</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-4" id="puzzleSizeContainer" style="display: none;">
+                            <label asp-for="SelectedSize" class="form-label fw-bold small text-uppercase">Puzzle Size</label>
+                            <select asp-for="SelectedSize" class="form-select border-dark" id="puzzleSelect" onchange="updatePrice()" disabled>
+                                <option value="60pc">60 Pieces</option>
+                                <option value="120pc">120 Pieces</option>
+                                <option value="150pc">150 Pieces</option>
+                                <option value="200pc">200 Pieces</option>
+                                <option value="250pc">250 Pieces</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="p-3 bg-light rounded mt-4" id="globalOptionsContainer">
+                    <div class="mb-3" id="finishContainer">
+                        <label asp-for="SelectedFinish" class="form-label fw-bold small text-uppercase">Print Finish</label>
+                        <select asp-for="SelectedFinish" asp-items="Html.GetEnumSelectList<PrintFinish>()" class="form-select border-dark" id="finishSelect" onchange="updatePrice()"></select>
+                    </div>
+
+                    <div class="form-check" id="frameContainer">
+                        <input class="form-check-input" type="checkbox" asp-for="IsFramed" id="framedCheck" onchange="updatePrice()">
+                        <label class="form-check-label fw-bold small text-uppercase" asp-for="IsFramed">
+                            Add Standard Frame (+$40.00)
+                        </label>
+                    </div>
+                </div>
+                <div class="d-flex align-items-center mt-4 mb-3">
+                    <label asp-for="Quantity" class="form-label fw-bold small text-uppercase me-3 mb-0">Qty</label>
+                    <input asp-for="Quantity" type="number" id="quantityInput" class="form-control border-dark text-center fw-bold" value="1" min="1" max="50" style="width: 80px;" onchange="updatePrice()" />
+                </div>
+
+                <button type="submit" class="btn btn-dark btn-lg w-100 text-uppercase py-3 mt-4 fw-bold" style="letter-spacing: 2px;">Add to Cart</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <style>
+        /* --- VISUALIZER ROOM CONTEXT --- */
+        .room-context {
+            height: 600px;
+            background-color: #e9ecef;
+            background-image: linear-gradient(to bottom, #f8f9fa 0%, #e2e6ea 80%, #ced4da 100%);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #ddd;
+        }
+        .room-context::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 35px;
+            background: #fff;
+            border-top: 3px solid #e0e0e0;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.03);
+        }
+
+        /* --- CUSTOM TAB HIGHLIGHTING --- */
+        .custom-tabs {
+            border-bottom: 2px solid #dee2e6;
+        }
+        .custom-tabs .nav-link {
+            color: #6c757d;
+            border: none;
+            border-bottom: 3px solid transparent;
+            padding-bottom: 12px;
+            transition: all 0.2s ease;
+        }
+        .custom-tabs .nav-link:hover {
+            color: #212529;
+        }
+        .custom-tabs .nav-link.active {
+            color: #212529 !important;
+            background: transparent;
+            border-bottom: 3px solid #212529; /* Explicit dark highlight underline */
+        }
+
+        /* --- UI CARD STYLING --- */
+        .format-card {
+            border: 2px solid #dee2e6;
+            padding: 20px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            background-color: #fff;
+            text-align: center;
+        }
+        .format-card i {
+            font-size: 2rem;
+            color: #888;
+            margin-bottom: 12px;
+            transition: color 0.2s ease;
+        }
+        .format-card:hover {
+            border-color: #adb5bd;
+            background-color: #f8f9fa;
+        }
+        .format-card.selected {
+            border-color: #212529;
+            background-color: #212529;
+            color: #fff !important;
+        }
+        .format-card.selected i {
+            color: #fff;
+        }
+        .letter-spacing-1 {
+            letter-spacing: 1px;
+        }
+
+        /* --- PREVIEW EFFECTS --- */
+        .preview-standard img {
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            border: 10px solid #fff;
+        }
+        .preview-canvas {
+            position: relative;
+            perspective: 1200px;
+        }
+        .preview-canvas img {
+            box-shadow: 20px 20px 30px rgba(0,0,0,0.3);
+            border-radius: 2px;
+            transform: rotateY(-15deg);
+            border-left: 20px solid #222; 
+        }
+        .preview-framed img {
+            border: 30px solid #1a1a1a;
+            padding: 45px;
+            background-color: #fafafa;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.1), 0 25px 50px rgba(0,0,0,0.4);
+        }
+        
+        .preview-mug {
+            position: relative;
+            width: 250px;
+            height: 300px;
+            border-radius: 10px 10px 20px 20px;
+            background: #fff;
+            box-shadow: inset -15px 0 30px rgba(0,0,0,0.15), 15px 25px 40px rgba(0,0,0,0.2);
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+        }
+        .preview-mug::after {
+            content: '';
+            position: absolute;
+            right: -45px;
+            top: 50px;
+            width: 60px;
+            height: 150px;
+            border: 18px solid #fff;
+            border-radius: 0 60px 60px 0;
+            box-shadow: 10px 15px 20px rgba(0,0,0,0.1);
+            z-index: -1;
+        }
+        .preview-mug img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.95; 
+            mix-blend-mode: multiply;
+        }
+        .preview-puzzle img {
+            background-image: 
+                linear-gradient(rgba(0, 0, 0, 0.2) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 0, 0, 0.2) 1px, transparent 1px);
+            background-size: 35px 35px;
+            background-blend-mode: overlay;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+    </style>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            updatePrice();
+
+            // When a tab is clicked, automatically select its first card
+            document.querySelectorAll('button[data-bs-toggle="tab"]').forEach(tab => {
+                tab.addEventListener('shown.bs.tab', function (event) {
+                    const targetPane = document.querySelector(event.target.getAttribute('data-bs-target'));
+                    const firstCard = targetPane.querySelector('.format-card');
+                    if (firstCard) {
+                        firstCard.click();
+                    }
+                });
+            });
+        });
+
+        function selectFormat(formatName, element, previewClass) {
+            document.querySelectorAll('.format-card').forEach(el => el.classList.remove('selected'));
+            element.classList.add('selected');
+            document.getElementById('hiddenFormat').value = formatName;
+            
+            let previewContainer = document.getElementById('dynamicPreview');
+            previewContainer.className = ''; 
+            previewContainer.classList.add(previewClass);
+
+            // const sizeContainer = document.getElementById('sizeContainer');
+            // if (sizeContainer) {
+            //     sizeContainer.style.display = (formatName === 'StandardPrint') ? 'block' : 'none';
+            // }
+            const sizeContainer = document.getElementById('sizeContainer');
+            const sizeSelect = document.getElementById('sizeSelect');
+            if (sizeContainer && sizeSelect) {
+                sizeContainer.style.display = (formatName === 'StandardPrint') ? 'block' : 'none';
+                sizeSelect.disabled = (formatName !== 'StandardPrint'); 
+            }
+
+            const puzzleContainer = document.getElementById('puzzleSizeContainer');
+            const puzzleSelect = document.getElementById('puzzleSelect');
+            if (puzzleContainer && puzzleSelect) {
+                puzzleContainer.style.display = (formatName === 'Puzzle') ? 'block' : 'none';
+                puzzleSelect.disabled = (formatName !== 'Puzzle');
+            }
+
+            const globalOptions = document.getElementById('globalOptionsContainer');
+            const finishContainer = document.getElementById('finishContainer');
+            const frameContainer = document.getElementById('frameContainer');
+
+            // Explicit logic to handle Global Options visibility
+            if (formatName === 'StandardPrint') {
+                globalOptions.style.display = 'block';
+                finishContainer.style.display = 'block';
+                frameContainer.style.display = 'block';
+            } 
+            else if (formatName === 'WallArt') {
+                globalOptions.style.display = 'block';
+                finishContainer.style.display = 'none'; // No finish for Wall Art
+                document.getElementById('finishSelect').selectedIndex = 0;
+                frameContainer.style.display = 'block';
+            } 
+            else {
+                globalOptions.style.display = 'none'; // Hide everything for Canvas/Gifts
+                finishContainer.style.display = 'none';
+                frameContainer.style.display = 'none';
+                document.getElementById('finishSelect').selectedIndex = 0;
+                document.getElementById('framedCheck').checked = false;
+            }
+
+            updatePrice();
+        }
+
+        function updatePrice() {
+            const pricingMap = JSON.parse(document.getElementById('pricingData').value);
+            const format = document.getElementById('hiddenFormat').value;
+            const scaleWrapper = document.getElementById('scaleWrapper');
+            
+            let priceKey = format;
+            let visualScale = 1;
+
+            if (format === 'StandardPrint') {
+                const size = document.getElementById('sizeSelect').value;
+                priceKey = `${format}_${size}`;
+                
+                switch(size) {
+                    case '4x6': visualScale = 0.4; break;
+                    case '5x7': visualScale = 0.55; break;
+                    case '8x10': visualScale = 0.75; break;
+                    case '11x14': visualScale = 0.95; break;
+                    case '12x12': visualScale = 0.85; break;
+                }
+            } 
+            else if (format === 'Puzzle') {
+                const size = document.getElementById('puzzleSelect').value;
+                priceKey = `${format}_${size}`; // Matches "Puzzle_60pc" from products.json
+                visualScale = 0.8;
+            }
+            else if (format === 'WallArt' || format === 'HangingCanvas') {
+                visualScale = 1.05; 
+            } 
+            else {
+                visualScale = 0.8; 
+            }
+
+            scaleWrapper.style.transform = `scale(${visualScale})`;
+
+            let currentPrice = pricingMap[priceKey] || parseFloat(document.getElementById('basePrice').value);
+
+            const finishSelect = document.getElementById('finishSelect');
+            const finish = finishSelect ? finishSelect.options[finishSelect.selectedIndex].text : 'None';
+            const framedCheck = document.getElementById('framedCheck');
+            const isFramed = framedCheck ? framedCheck.checked : false;
+
+            // JS logic matches the backend restrictions
+            if (format === 'StandardPrint') {
+                if (finish === 'Matte') currentPrice += 2.30;
+                else if (finish === 'Glossy') currentPrice += 2.30;
+                else if (finish === 'Lustre') currentPrice += 3.00;
+                else if (finish === 'Metallic') currentPrice += 4.30;
+            }
+            if (isFramed && (format === 'StandardPrint' || format === 'WallArt')) {
+                currentPrice += 40.00;
+            }
+
+            const quantity = parseInt(document.getElementById('quantityInput').value) || 1;
+            const finalTotal = currentPrice * quantity;
+
+            document.getElementById('priceDisplay').innerText = '$' + currentPrice.toFixed(2);
+        }
+    </script>
+}

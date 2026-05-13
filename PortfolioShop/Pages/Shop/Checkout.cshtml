@@ -1,0 +1,144 @@
+@page
+@model CheckoutModel
+@{
+    ViewData["Title"] = "Checkout";
+}
+
+<div class="container p-5">
+    <div class="row justify-content-center">
+        @* Limits width on desktop for a compact, professional look *@
+        <div class="col-12 col-xl-10">
+            
+            <div class="row g-5">
+                <div class="col-md-5 col-lg-4 order-md-last">
+                    <h4 class="d-flex justify-content-between align-items-center mb-3">
+                        <span class="text-primary">Order Summary</span>
+                        <span class="badge bg-primary rounded-pill">@Model.CartItems.Count</span>
+                    </h4>
+                    
+                    <div class="card shadow-sm border-0">
+                        <ul class="list-group list-group-flush">
+                            @foreach (var item in Model.CartItems)
+                            {
+                                <li class="list-group-item d-flex justify-content-between lh-sm py-3">
+                                    <div>
+                                        <h6 class="my-0">@item.ProductName</h6>
+                                        
+                                        <div class="my-1">
+                                            <small class="text-muted me-2">Format: @item.SelectedFormat (@item.SelectedSize)</small>
+                                            @if (item.SelectedFinish != global::Portfolio.Core.Models.PrintFinish.None)
+                                            {
+                                                <small class="text-muted me-2">Finish: @item.SelectedFinish</small>
+                                            }
+                                            @if(item.IsFramed) {
+                                                <small class="text-muted fw-bold text-success">Framed</small>
+                                            }
+                                        </div>
+
+                                        <small class="text-muted">Qty: @item.Quantity</small>
+                                    </div>
+                                    <span class="text-muted">@item.Total.ToString("C")</span>
+                                </li>
+                            }
+                            <li class="list-group-item d-flex justify-content-between bg-light py-3">
+                                <span class="fw-bold">Total (USD)</span>
+                                <strong class="text-primary fs-5">@Model.Total.ToString("C")</strong>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-md-7 col-lg-8">
+                    <div class="card shadow-sm border-0 p-4">
+                        <h4 class="mb-4">Contact Information</h4>
+                        
+                        <form method="post" id="checkout-form">
+                            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                            <div class="row g-3">
+                                <div class="col-12">
+                                    <label asp-for="Input.Name" class="form-label fw-bold">Full Name<span class="text-danger">*</span></label>
+                                    <input asp-for="Input.Name" class="form-control" placeholder="Jane Doe" required />
+                                    <span asp-validation-for="Input.Name" class="text-danger small"></span>
+                                </div>
+
+                                <div class="col-12">
+                                    <label asp-for="Input.Email" class="form-label fw-bold">Email Address<span class="text-danger">*</span></label>
+                                    <input asp-for="Input.Email" class="form-control" placeholder="jane@example.com" required />
+                                    <span asp-validation-for="Input.Email" class="text-danger small"></span>
+                                </div>
+                            </div>
+
+                            <hr class="my-4">
+
+                            <h5 class="mb-3">Payment</h5>
+                            @* PayPal Smart Buttons will render here *@
+                            <div id="paypal-button-container" class="mb-3"></div>
+                            
+                            @* Hidden field to pass the PayPal Order ID back to your OnPost handler *@
+                            <input type="hidden" id="payPalOrderId" name="payPalOrderId" />
+
+                            <p class="text-center text-muted small mt-3">
+                                <i class="fas fa-lock me-1"></i> Secure Payment Processing by PayPal
+                            </p>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+    @* Load PayPal SDK dynamically using the ClientId from your PageModel *@
+    <script src="https://www.paypal.com/sdk/js?client-id=@Model.PayPalClientId&currency=USD"></script>
+
+    <script>
+        paypal.Buttons({
+            // Pre-validation: Don't open PayPal if the name/email is missing
+            onClick: function(data, actions) {
+                var form = document.getElementById('checkout-form');
+                if (!form.checkValidity()) {
+                    form.reportValidity(); // Show native browser validation tooltips
+                    return actions.reject();
+                }
+            },
+
+            // Set up the transaction details
+            createOrder: function(data, actions) {
+                return actions.order.create({
+                    purchase_units: [{
+                        amount: {
+                            value: '@Model.Total.ToString("F2")' // Must be 2 decimal places (e.g. 45.00)
+                        }
+                    }]
+                });
+            },
+
+            // Handle the successful payment approval
+            onApprove: function(data, actions) {
+                return actions.order.capture().then(function(details) {
+                    // 1. Save the PayPal Order ID into our hidden input
+                    document.getElementById('payPalOrderId').value = data.orderID;
+                    
+                    // 2. Submit the form to the C# handler: OnPostPlaceOrderAsync
+                    var form = document.getElementById('checkout-form');
+                    form.action = "?handler=PlaceOrder";
+                    form.submit();
+                });
+            },
+
+            onCancel: function (data) {
+                console.log("Payment cancelled by user.");
+            },
+
+            onError: function (err) {
+                console.error("PayPal Error:", err);
+                alert("An error occurred during the payment process. Please try again.");
+            }
+        }).render('#paypal-button-container');
+    </script>
+}

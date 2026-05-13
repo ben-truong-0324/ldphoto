@@ -1,0 +1,65 @@
+﻿@page
+@model LDPhotography.Pages.IndexModel
+@{
+    ViewData["Title"] = "Home";
+}
+
+<!-- <header class="py-5">
+    <div class="container text-center">
+        <div class="masthead-subheading mb-3 text-muted"> Find your world with inner peace </div>
+    </div>
+</header> -->
+
+<section class="page-section bg-white" style="padding-top: 2em" id="portfolio">
+    <div class="container">
+        <div class="text-center mb-5">
+            <div class="italic mb-3 text-muted"> Find your world with inner peace </div>
+            <h2 class="section-heading text-uppercase">The Four Seasons</h2>
+            <p class="serif-font italic text-muted">Hello everyone! Welcome to my gallery, hope you enjoy my art as much as I do!</p>
+        </div>
+        
+        <div class="season-grid">
+            @foreach (var portfolio in Model.Portfolios)
+            {
+                <a asp-page="/Portfolio/Gallery" 
+                   asp-route-collection="@portfolio.Collection" 
+                   asp-route-subCategory="@portfolio.SubCategory" 
+                   class="season-item">
+                        
+                    <img src="@portfolio.ImageUrl" class="season-img" alt="@portfolio.Title">
+                    <div class="season-label">@portfolio.Title</div>
+                </a>
+            }
+        </div>
+
+        <div class="text-center mt-5 pt-4">
+             <a class="btn btn-outline-dark btn-xl text-uppercase" asp-page="/Shop/Index">View The Collection</a>
+        </div>
+    </div>
+</section>
+
+<section class="page-section bg-light" id="about">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="section-heading text-uppercase">My Journey</h2>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="journey-timeline">
+                    <div class="journey-step">
+                        <h4 class="serif-font">The Discovery</h4>
+                        <p class="text-muted">It began with a fascination for the interplay of light and shadow...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <style>
+        body {
+            padding-top: 5em;
+        }
+    </style>
+}

@@ -1,0 +1,96 @@
+@page
+@model PortfolioShop.Pages.Cart.CartIndexModel
+
+<div class="container p-5">
+    <div class="row justify-content-center">
+        <div class="col-12 col-lg-8 col-xl-6">
+            
+            <h1 class="mb-4">Your Cart</h1>
+
+            @if (!Model.CartItems.Any())
+            {
+                <div class="alert alert-info shadow-sm">
+                    Your cart is empty. <a asp-page="/Shop/Index" class="alert-link">Go shopping!</a>
+                </div>
+            }
+            else
+            {
+                <div class="card shadow-sm border-0">
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table table-hover mb-0">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Product</th>
+                                        <th class="text-center">Qty</th>
+                                        <th class="text-end">Total</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.CartItems)
+                                    {
+                                        <tr class="align-middle">
+                                            <td>
+                                                <div class="fw-bold">@item.ProductName</div>
+                                                
+                                                <div class="text-muted small mb-1">
+                                                    <span class="badge bg-secondary">@item.SelectedFormat</span>
+                                                    @if (item.SelectedFormat == global::Portfolio.Core.Models.ProductFormat.StandardPrint || 
+                                                         item.SelectedFormat == global::Portfolio.Core.Models.ProductFormat.Puzzle)
+                                                    {
+                                                        <span class="badge bg-info text-dark border">@item.SelectedSize</span>
+                                                    }
+                                                    @if (item.SelectedFinish != global::Portfolio.Core.Models.PrintFinish.None)
+                                                    {
+                                                        <span class="badge bg-light text-dark border">@item.SelectedFinish</span>
+                                                    }
+                                                    @if(item.IsFramed)
+                                                    {
+                                                        <span class="badge bg-success">Framed</span>
+                                                    }
+                                                </div>
+                                                
+                                                <small class="text-muted">@item.Price.ToString("C") each</small>
+                                            </td>
+                                            <td class="text-center">
+                                                <form method="post" asp-page-handler="UpdateQuantity" class="d-flex align-items-center justify-content-center">
+                                                    <input type="hidden" name="cartItemId" value="@item.Id" />
+                                                    <input type="number" name="quantity" value="@item.Quantity" min="1" class="form-control form-control-sm text-center border-dark" style="width: 70px;" onchange="this.form.submit()" />
+                                                </form>
+                                            </td>
+                                            <td class="text-end fw-bold">
+                                                @item.Total.ToString("C")
+                                            </td>
+
+                                            <td class="text-end">
+                                                <form method="post" asp-page-handler="Remove" class="d-inline">
+                                                    <input type="hidden" name="cartItemId" value="@item.Id" />
+                                                    <button type="submit" class="btn btn-sm btn-outline-danger" title="Remove from cart">
+                                                        <i class="fas fa-trash-alt"></i>
+                                                    </button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="card-footer bg-white py-3">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h4 class="mb-0">Total: <span class="text-primary">@Model.Total.ToString("C")</span></h4>
+                            <a asp-page="/Shop/Checkout" class="btn btn-primary btn-lg px-4">Checkout</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="text-center mt-3">
+                    <a asp-page="/Shop/Index" class="text-muted small text-decoration-none">
+                        <i class="fas fa-arrow-left me-1"></i> Continue Shopping
+                    </a>
+                </div>
+            }
+        </div>
+    </div>
+</div>
