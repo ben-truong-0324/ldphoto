@@ -2,10 +2,39 @@
 @model LDPhotography.Pages.Portfolio.GalleryModel
 @{
     ViewData["Title"] = Model.Title;
+
+    // Helper to format URL slugs (e.g., "fine-art" -> "Fine-art")
+    // For even better formatting, you can handle this in your PageModel!
+    var collectionName = RouteData.Values["collection"]?.ToString() ?? "";
+    var subCategoryName = RouteData.Values["subCategory"]?.ToString();
+    
+    // Optional: Capitalize the first letter for a polished look
+    if (!string.IsNullOrEmpty(collectionName))
+    {
+        collectionName = char.ToUpper(collectionName[0]) + collectionName.Substring(1);
+    }
+    if (!string.IsNullOrEmpty(subCategoryName))
+    {
+        subCategoryName = char.ToUpper(subCategoryName[0]) + subCategoryName.Substring(1);
+    }
+
 }
 
 <div class="portfolio-detail-container">
-    <section class="collection-gallery pb-5">
+
+    <section class="collection-header text-center py-5">
+        <div class="container">
+            <h1 class="serif-font display-4 mb-2">@collectionName Collection</h1>
+            
+            @if (!string.IsNullOrEmpty(subCategoryName))
+            {
+                <h3 class="serif-font text-muted fs-4">@subCategoryName</h3>
+            }
+            <hr class="w-25 mx-auto mt-4 mb-0" style="border-top: 1px solid #ccc;" />
+        </div>
+    </section>
+
+    <section class="collection-gallery pb-5 pt-4">
         <div class="container">
             <div class="row g-5">
                 @foreach (var img in Model.GalleryImages)

@@ -33,3 +33,9 @@ dotnet test
 dotnet dev-certs https --clean
 dotnet dev-certs https --trust
 ngrok http https://localhost:44359 --host-header="localhost:44359"
+
+
+
+git add .
+git commit -m "updated"
+git push
