@@ -8,6 +8,7 @@ ENV ASPNETCORE_URLS=http://+:8080
 FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
 WORKDIR /src
 
+COPY ["Directory.Packages.props", "."]
 # Copy csproj files and restore dependencies
 # This layer is cached unless your dependencies change
 COPY ["PortfolioShop/PortfolioShop.csproj", "PortfolioShop/"]
