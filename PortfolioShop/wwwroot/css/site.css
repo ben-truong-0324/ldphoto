@@ -81,13 +81,13 @@ body {
 
 /* Default for mobile (if the stacked menu is taller) */
 body {
-    padding-top: 6.5rem;
+    padding-top: 3rem;
 }
 
 /* For larger desktop screens */
 @media (min-width: 992px) {
     body {
-        padding-top: 5rem; 
+        padding-top: 3rem; 
     }
 }
 
@@ -219,7 +219,7 @@ header.masthead {
     text-transform: uppercase;
     letter-spacing: 2px;
     font-size: 0.9rem;
-    margin-bottom: 1.5rem;
+    margin-bottom: .7rem;
     color: #ffffff;
 }
 
@@ -227,8 +227,7 @@ header.masthead {
     color: white !important;
     text-decoration: none;
     display: block;
-    margin-bottom: 0.5rem;
-    font-size: 0.8rem;
+    margin-bottom: 0.3rem;
     transition: color 0.3s;
 }
 
@@ -237,21 +236,18 @@ header.masthead {
 }
 
 .aa-footer .mission-statement {
-    font-size: 0.85rem;
     line-height: 1.8;
 }
 
 .aa-footer .contact-info {
-    font-size: 0.8rem;
     color: #bbb;
     margin-bottom: 1rem;
 }
 
 .aa-footer .bottom-bar {
-    border-top: 1px solid #222;
-    margin-top: 4rem;
-    padding-top: 2rem;
-    font-size: 0.7rem;
+    border-top: 1px solid white;
+    margin-top: 1rem;
+    padding-top: 1rem;
     color: white;
     text-transform: uppercase;
     letter-spacing: 1px;
@@ -259,7 +255,7 @@ header.masthead {
 
 .aa-footer .social-icons .btn-social {
     background: transparent !important;
-    border: 1px solid #444 !important;
+    border: 1px solid white !important;
     color: #fff !important;
     margin-right: .7rem;
 }
@@ -378,11 +374,42 @@ header.masthead {
     font-style: italic;
 }
 
-/* =========================================
-   MOBILE RESPONSIVE ADJUSTMENTS
-   ========================================= */
+
+.text-danger {
+    color: red;
+}
+
+
+.text-navbar {
+    max-width: 70%;
+    font-size: 1rem;
+}
+
+.aa-footer {
+    font-size: 1rem;
+}
+body {
+    font-size:1rem;
+}
+
+.mt-custom {
+    margin-top:7rem !important;
+}
+
 @media (max-width: 768px) {
-    
+    .mt-custom {
+        margin-top:0rem !important;
+    }   
+    body {
+        font-size: .7rem;
+    }
+    .text-navbar {
+        max-width: 70%;
+        font-size: .7rem;
+    }
+    .aa-footer {
+        font-size: .7rem;
+    }
     /* 1. Reduce the massive letter spacing on titles so they don't break onto 4 lines */
     h1, h2 {
         letter-spacing: 2px !important;
@@ -411,8 +438,4 @@ header.masthead {
         padding-top: 0rem !important;
         padding-bottom: 3rem !important;
     }
-}
-
-.text-danger {
-    color: red;
 }

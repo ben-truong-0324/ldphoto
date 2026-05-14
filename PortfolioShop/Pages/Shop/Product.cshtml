@@ -8,8 +8,8 @@
 <div class="container">
     <div class="row g-5">
         
-        <div class="col-12 col-lg-6 mb-4 mb-lg-0">
-            <div class="room-context rounded shadow-sm" style="min-height: 300px; max-height: 60vh;">
+        <div class="col-12 col-lg-6 mb-2 mb-lg-0 mt-custom">
+            <div class="room-context rounded shadow-sm">
                 <div id="scaleWrapper" style="transition: transform 0.5s cubic-bezier(0.25, 0.8, 0.25, 1); transform: scale(0.4);">
                     <div id="dynamicPreview" class="preview-standard">
                         <img src="@Model.Product.ImageUrl" alt="@Model.Product.Name" class="img-fluid" id="sourceImage">
@@ -21,18 +21,16 @@
             </p>
         </div>
 
-        <div class="col-12 col-lg-6">
+        <div class="col-12 col-lg-6 mt-custom">
             <h2 class="serif-font fw-bold mb-2">@Model.Product.Name</h2>
-            <p class="text-muted mb-4 text-subheading">@Model.Product.Description</p>
+            <p class="text-muted mb-3 text-subheading">@Model.Product.Description</p>
             
-            <h3 class="fw-bold mb-4" id="priceDisplay">@Model.Product.BasePrice.ToString("C")</h3>
-
             <form method="post" asp-page-handler="AddToCart" id="addToCartForm">
                 <input type="hidden" name="productId" value="@Model.Product.Id" />
                 <input type="hidden" id="basePrice" value="@Model.Product.BasePrice" />
                 <input type="hidden" asp-for="SelectedFormat" id="hiddenFormat" value="StandardPrint" />
                 
-                <ul class="nav nav-tabs mb-4 custom-tabs" id="productTabs" role="tablist">
+                <ul class="nav nav-tabs mb-3 custom-tabs" id="productTabs" role="tablist">
                     <li class="nav-item" role="presentation">
                         <button class="nav-link active text-uppercase small letter-spacing-1 fw-bold" id="prints-tab" data-bs-toggle="tab" data-bs-target="#prints" type="button" role="tab">Prints</button>
                     </li>
@@ -44,7 +42,7 @@
                     </li>
                 </ul>
 
-                <div class="tab-content mb-4" id="productTabContent">
+                <div class="tab-content mb-3" id="productTabContent">
                     
                     <div class="tab-pane fade show active" id="prints" role="tabpanel">
                         <div class="row g-3">
@@ -138,12 +136,14 @@
                         </label>
                     </div>
                 </div>
-                <div class="d-flex align-items-center mt-4 mb-3">
+                <div class="d-flex align-items-center mt-1 mb-1">
                     <label asp-for="Quantity" class="form-label fw-bold small text-uppercase me-3 mb-0">Qty</label>
                     <input asp-for="Quantity" type="number" id="quantityInput" class="form-control border-dark text-center fw-bold" value="1" min="1" max="50" style="width: 80px;" onchange="updatePrice()" />
                 </div>
 
-                <button type="submit" class="btn btn-dark btn-lg w-100 text-uppercase py-3 mt-4 fw-bold" style="letter-spacing: 2px;">Add to Cart</button>
+                <h3 class="fw-bold mt-2 mb-2 text-price" id="priceDisplay">@Model.Product.BasePrice.ToString("C")</h3>
+
+                <button type="submit" class="btn btn-dark btn-lg w-100 text-uppercase mt-2 fw-bold" style="letter-spacing: 2px;">Add to Cart</button>
             </form>
         </div>
     </div>
@@ -304,8 +304,16 @@
                 font-size: 0.85rem; /* smaller text */
             }
             .custom-tabs .nav-link {
-                padding: 8px 10px; /* smaller tab hitboxes */
-                font-size: 0.8rem;
+                padding: 4px 5px; /* smaller tab hitboxes */
+                font-size: 0.7rem;
+            }
+            .text-price {
+                font-size: .7rem !important;
+            }
+        }
+        @@media (max-width: 740px) {
+            .format-card i, .format-card span, .form-select {
+                font-size: .7rem !important;
             }
         }
     </style>

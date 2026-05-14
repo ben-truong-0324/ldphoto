@@ -4,23 +4,23 @@
     ViewData["Title"] = "Photography Shop";
 }
 
-<section class="page-section bg-light py-5" id="shop">
+<section class="page-section bg-light py-4" id="shop">
     <div class="container">
-        <div class="text-center mb-5 pb-3">
-            <h2 class="section-heading text-uppercase">Print Shop</h2>
-            <h3 class="section-subheading text-muted serif-font">Professional grade prints delivered to your door.</h3>
+        <div class="text-center mb-2 pb-2">
+            <h2 class="section-heading text-uppercase mt-custom">Print Shop</h2>
+            <h3 class="section-subheading text-muted serif-font mb-2">Professional grade prints delivered to your door.</h3>
         </div>
 
         @foreach (var collection in Model.GroupedProducts)
         {
             <div class="collection-block mb-5 pb-4">
-                <h2 class="text-uppercase mb-4 border-bottom pb-2" style="letter-spacing: 3px;">
+                <h2 class="text-uppercase mb-4 mb-custom  border-bottom pb-2 text-center" style="letter-spacing: 3px;">
                     @collection.Key Collection
                 </h2>
 
                 @foreach (var subCat in collection.Value)
                 {
-                    <h4 id="@subCat.Key.ToLower()" class="text-muted serif-font mb-4 mt-5 fst-italic" style="scroll-margin-top: 100px;">@subCat.Key</h4>
+                    <h4 id="@subCat.Key.ToLower()" class="text-muted serif-font mb-4 mb-custom  mt-5 fst-italic" style="scroll-margin-top: 100px;">@subCat.Key</h4>
                     
                     <div class="row g-4">
                         @foreach (var product in subCat.Value)
@@ -30,9 +30,9 @@
                                     <a asp-page="/Shop/Product" asp-route-id="@product.Id">
                                         <img class="card-img-top" src="@product.ImageUrl" alt="@product.Name" style="height: 300px; object-fit: cover;">
                                     </a>
-                                    <div class="card-body text-center d-flex flex-column p-4">
-                                        <h5 class="card-title serif-font mb-3 fs-4">@product.Name</h5>
-                                        <p class="text-dark fw-bold mb-4 mt-auto">Starting at @product.BasePrice.ToString("C")</p>
+                                    <div class="card-body text-center d-flex flex-column p-4 pb-custom">
+                                        <h5 class="card-title serif-font mb-3 fs-4 py-custom">@product.Name</h5>
+                                        <p class="text-dark fw-bold mb-4 mb-custom  mt-auto">Starting at @product.BasePrice.ToString("C")</p>
                                         <a asp-page="/Shop/Product" asp-route-id="@product.Id" class="btn btn-outline-dark text-uppercase mt-auto">View Details</a>
                                     </div>
                                 </div>
@@ -44,3 +44,22 @@
         }
     </div>
 </section>
+
+
+
+@section Scripts {
+    <style>
+    @@media (max-width: 740px) {
+        .pb-custom {
+            padding: 0 0 .8rem !important;
+        }
+        .mb-custom {
+            margin: 0 0 .8rem !important;
+        }
+        .py-custom {
+            padding: .8rem 0 !important;
+        }
+    }
+    
+    </style>
+}

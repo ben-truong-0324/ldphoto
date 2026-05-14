@@ -39,7 +39,7 @@
             <div class="row g-5">
                 @foreach (var img in Model.GalleryImages)
                 {
-                    <div class="col-sm-6 col-md-4 col-lg-3 text-center">
+                    <div class="col-sm-6 col-md-4 col-lg-3 text-center mt-3">
                         <a href="@img.ProductUrl">
                         <img src="@img.Url" class="img-fluid gallery-thumbnail mb-3" alt="@img.AltText" />
                         </a>
@@ -48,7 +48,7 @@
                         
                         @if (!string.IsNullOrEmpty(img.ProductUrl))
                         {
-                            <a href="@img.ProductUrl" class="text-uppercase small text-dark fw-bold text-decoration-none" style="letter-spacing: 1px; border-bottom: 1px solid #000; padding-bottom: 2px;">
+                            <a href="@img.ProductUrl" class="text-uppercase small text-dark fw-bold text-decoration-none" style="border-bottom: 1px solid #000; padding-bottom: 2px;">
                                 Buy Now
                             </a>
                         }
