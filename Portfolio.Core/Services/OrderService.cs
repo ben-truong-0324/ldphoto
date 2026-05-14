@@ -13,7 +13,15 @@ namespace Portfolio.Core.Services
             _fileService = fileService;
             _cartService = cartService;
         }
-        public async Task<Order> CreateOrderAsync(string userId, string payPalOrderId, string customerEmail, string customerName)
+        public async Task<Order> CreateOrderAsync(
+                string userId, 
+                string payPalOrderId, 
+                string customerEmail, 
+                string customerName,
+                string shippingAddress,
+                string shippingCity,
+                string shippingState,
+                string shippingZip)
         {
             var cartItems = await _cartService.GetCartItemsAsync();
             var totalAmount = await _cartService.GetCartTotalAsync();
@@ -32,6 +40,10 @@ namespace Portfolio.Core.Services
                 PayPalOrderId = payPalOrderId,
                 CustomerEmail = customerEmail,
                 CustomerName = customerName,
+                ShippingAddress = shippingAddress,
+                ShippingCity = shippingCity,
+                ShippingState = shippingState,
+                ShippingZip = shippingZip,
                 OrderItems = cartItems.Select(cartItem => new OrderItem
                 {
                     ProductId = cartItem.ProductId,

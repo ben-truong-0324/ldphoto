@@ -11798,8 +11798,11 @@ section#contact form#contactForm :-ms-input-placeholder {
     font-size: .6rem;
     padding: .2rem .2rem;
   }
-  .badge, .btn {
+  .badge {
   font-size: 0.6em;
+  }
+  .btn {
+    font-size: 1em;
   }
   .table > :not(caption) > * > * {
     padding: 0.2rem 0.2rem;

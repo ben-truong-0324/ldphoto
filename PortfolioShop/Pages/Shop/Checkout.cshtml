@@ -68,10 +68,36 @@
                                     <span asp-validation-for="Input.Email" class="text-danger small"></span>
                                 </div>
                             </div>
+                            <h4 class="mt-4 mb-2">Shipping Address</h4>
+                            <div class="row g-3">
+                                <div class="col-12">
+                                    <label asp-for="Input.Address" class="form-label fw-bold">Street Address<span class="text-danger">*</span></label>
+                                    <input asp-for="Input.Address" class="form-control" placeholder="123 Main St" required />
+                                    <span asp-validation-for="Input.Address" class="text-danger small"></span>
+                                </div>
+
+                                <div class="col-md-5">
+                                    <label asp-for="Input.City" class="form-label fw-bold">City<span class="text-danger">*</span></label>
+                                    <input asp-for="Input.City" class="form-control" required />
+                                    <span asp-validation-for="Input.City" class="text-danger small"></span>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label asp-for="Input.State" class="form-label fw-bold">State<span class="text-danger">*</span></label>
+                                    <input asp-for="Input.State" class="form-control" required />
+                                    <span asp-validation-for="Input.State" class="text-danger small"></span>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label asp-for="Input.ZipCode" class="form-label fw-bold">Zip Code<span class="text-danger">*</span></label>
+                                    <input asp-for="Input.ZipCode" class="form-control" required />
+                                    <span asp-validation-for="Input.ZipCode" class="text-danger small"></span>
+                                </div>
+                            </div>
 
                             <hr class="my-4">
 
-                            <h5 class="mb-3">Payment</h5>
+                            <h4 class="mb-3">Payment</h4>
                             @* PayPal Smart Buttons will render here *@
                             <div id="paypal-button-container" class="mb-3"></div>
                             
@@ -94,7 +120,8 @@
     <style>
     @@media (max-width: 740px) {
         h4 {
-            font-size: .8rem !important;
+            font-size: .85rem !important;
+            font-weight:bold;
         }
         h6 {
             font-size: .7rem !important;

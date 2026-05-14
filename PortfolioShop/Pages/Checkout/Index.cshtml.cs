@@ -59,7 +59,14 @@ namespace PortfolioShop.Pages.Checkout
             }
         }
 
-        public async Task<IActionResult> OnPostCaptureOrderAsync(string orderId, string email, string name)
+        public async Task<IActionResult> OnPostCaptureOrderAsync(
+            string orderId,
+            string email,
+            string name,
+            string address,  
+            string city,     
+            string state,   
+            string zipCode)  
         {
             try
             {
@@ -70,7 +77,10 @@ namespace PortfolioShop.Pages.Checkout
                     var userId = User.FindFirstValue(ClaimTypes.NameIdentifier) ?? "anonymous";
                     
                     // Create order in database
-                    var order = await _orderService.CreateOrderAsync(userId, orderId, email, name);
+                    var order = await _orderService.CreateOrderAsync(userId, orderId, email, name, address,
+                                                                                        city,
+                                                                                        state,
+                                                                                        zipCode);
                     
                     // Send confirmation email
                     await _emailService.SendOrderConfirmationAsync(email, order);

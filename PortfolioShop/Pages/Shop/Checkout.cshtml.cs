@@ -41,6 +41,18 @@ namespace PortfolioShop.Pages.Shop
 
             [Required(ErrorMessage = "Email is required"), EmailAddress, Display(Name = "Email Address")]
             public string Email { get; set; } = string.Empty;
+
+            [Required(ErrorMessage = "Address is required"), Display(Name = "Street Address")]
+            public string Address { get; set; } = string.Empty;
+
+            [Required(ErrorMessage = "City is required")]
+            public string City { get; set; } = string.Empty;
+
+            [Required(ErrorMessage = "State is required")]
+            public string State { get; set; } = string.Empty;
+
+            [Required(ErrorMessage = "Zip Code is required"), Display(Name = "Zip Code")]
+            public string ZipCode { get; set; } = string.Empty;
         }
 
         public async Task<IActionResult> OnGetAsync()
@@ -69,7 +81,11 @@ namespace PortfolioShop.Pages.Shop
                 "session-user",
                 payPalOrderId,
                 Input.Email,
-                Input.Name
+                Input.Name,
+                Input.Address,
+                Input.City,
+                Input.State,
+                Input.ZipCode
             );
 
             // 3. Send notifications before clearing the cart (or after, depending on preference)

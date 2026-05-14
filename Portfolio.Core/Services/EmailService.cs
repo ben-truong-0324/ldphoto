@@ -145,12 +145,24 @@ namespace Portfolio.Core.Services
                                     </td>
                                 </tr>
                             </table>
+                            <table width='100%' cellspacing='0' cellpadding='0' border='0' style='margin-top: 25px;'>
+                                <tr>
+                                    <td width='100%' style='background-color: #f4f6f8; padding: 20px; border-radius: 8px;'>
+                                        <h4 style='margin: 0; font-size: 12px; text-transform: uppercase; color: #999;'>Shipping To</h4>
+                                        <p style='margin: 5px 0 0 0; font-size: 14px; color: #333; line-height: 1.5;'>
+                                            <strong>{order.CustomerName}</strong><br/>
+                                            {order.ShippingAddress}<br/>
+                                            {order.ShippingCity}, {order.ShippingState} {order.ShippingZip}
+                                        </p>
+                                    </td>
+                                </tr>
+                            </table>
                         </td>
                     </tr>
                     <tr>
                         <td style='padding: 30px; background-color: #fafafa; text-align: center;'>
                             <p style='font-size: 12px; color: #aaa; margin: 0;'>
-                                &copy; 2026 Portfolio Shop. All rights reserved. <br />
+                                &copy; {DateTime.UtcNow.Year} LDPhotography. All rights reserved. <br />
                                 This is a secure transaction via PayPal.
                             </p>
                         </td>

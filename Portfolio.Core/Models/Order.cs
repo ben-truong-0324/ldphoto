@@ -13,5 +13,10 @@ namespace Portfolio.Core.Models
         public string CustomerEmail { get; set; }
         public string CustomerName { get; set; }
         public List<OrderItem> OrderItems { get; set; }
+
+        public string ShippingAddress { get; set; } = string.Empty;
+        public string ShippingCity { get; set; } = string.Empty;
+        public string ShippingState { get; set; } = string.Empty;
+        public string ShippingZip { get; set; } = string.Empty;
     }
 }
